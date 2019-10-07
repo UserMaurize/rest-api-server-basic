@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-
+const port = process.env.PORT || 3000;
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
  
@@ -15,8 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //routes
-app.use( require('./routes/user') );
-
+app.use( require('./routes/routes') );
 
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -30,6 +29,6 @@ mongoose.connect(process.env.MONGO_URI, {
     console.log('Database online');
 });
  
-app.listen(process.env.PORT, () => {
-    console.log(`Listening on port: ${process.env.PORT}`);
+app.listen(port, () => {
+    console.log(`Express server listening on port ${port}.\nEnvironment: ${process.env.NODE_ENV}`);
 });

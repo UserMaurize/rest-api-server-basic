@@ -6,9 +6,11 @@ const _ = require('underscore');
 
 const User = require('../models/user');
 
+const { verifyToken, verifyRole } = require('../middlewares/autentication');
+
 const app = express();
 
-app.get('/users', function (req, res) {
+app.get('/users', verifyToken, (req, res) => {
     
     let from = req.query.from || 0;
     from = Number(from);
@@ -37,7 +39,7 @@ app.get('/users', function (req, res) {
 
   });
   
-  app.post('/user', function (req, res) {
+  app.post('/user', [verifyToken, verifyRole], (req, res) => {
   
       let body = req.body;
   
@@ -80,7 +82,7 @@ app.get('/users', function (req, res) {
   
     });
   
-  app.put('/user/:id', function (req, res) {
+  app.put('/user/:id', [verifyToken, verifyRole], (req, res) => {
   
       let id = req.params.id;
       let body =  _.pick( req.body, ['name','email','img','role','status'] );
@@ -105,7 +107,7 @@ app.get('/users', function (req, res) {
       });
   });
   
-  app.delete('/user/:id', function (req, res) {
+  app.delete('/user/:id', [verifyToken, verifyRole], (req, res) => {
       
     let id = req.params.id;
 
