@@ -15,8 +15,8 @@ let verifyToken = (req, res, next) => {
                 err
             })
         }
-
-        req.user = payload.user;
+     
+        req.user = payload.userDB;
         next();
 
     });
